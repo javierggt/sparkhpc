@@ -11,7 +11,7 @@
 # setup the spark paths
 import os
 os.environ['SPARK_HOME']='{spark_home}'
-os.environ['SPARK_LOCAL_DIRS']='/tmp'
+os.environ['SPARK_LOCAL_DIRS']='{spark_local_dir}'
 os.environ['LOCAL_DIRS']=os.environ['SPARK_LOCAL_DIRS']
 os.environ['SPARK_WORKER_DIR']=os.path.join(os.environ['SPARK_LOCAL_DIRS'], 'work')
 

@@ -347,6 +347,10 @@ class SparkJob(object):
 
         template_str = template_str.decode()
 
+        from pyspark import SparkContext, SparkConf
+        spark_conf = dict(SparkContext(conf=SparkConf())._conf.getAll())
+        local_dirs = spark_conf['spark.local.dir'] if 'spark.local.dir' else '/tmp'
+
         job = template_str.format(walltime=self.walltime, 
                                   ncores=self.ncores, 
                                   cores_per_executor=self.cores_per_executor,
@@ -357,7 +361,8 @@ class SparkJob(object):
                                   spark_home=self.spark_home,
                                   master_log_dir=self.master_log_dir,
                                   master_log_filename=self.master_log_filename,
-                                  extra_scheduler_options=self.extra_scheduler_options)
+                                  extra_scheduler_options=self.extra_scheduler_options,
+                                  spark_local_dir=local_dirs)
 
         with open('job', 'w') as jobfile: 
             jobfile.write(job)
